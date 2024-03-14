@@ -8,8 +8,8 @@ o	The 30% stop loss is hit.
 o	The target of 80% is achieved.
 5.	If neither condition is met, hold the position until the expiry time of 3:20 pm and exit all legs of the trade together.
 
-   Backtesting Period : Year 2017 ; Instrument : BANKNIFTY Futures & Options
-   Link to Data : https://drive.google.com/drive/folders/1c4iiWbfzmPPoMWk08jUeqz0YL_yheM8Y?usp=sharing
+   # Backtesting Period : Year 2017 ; Instrument : BANKNIFTY Futures & Options
+   # Link to Data : https://drive.google.com/drive/folders/1c4iiWbfzmPPoMWk08jUeqz0YL_yheM8Y?usp=sharing
    
 
 ![equity_dd_curve](https://github.com/SgGokul/Options_Strat_Backtesting/assets/107173414/0c570ce5-487e-4169-91c4-372b7f40afb9)
