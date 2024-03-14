@@ -1,0 +1,19 @@
+,Stats,Percentage Return
+0,Capital,1000000
+1,Total Trades,242
+2,Profitable Trades,156
+3,Losing Trades,86
+4,Hit Ratio,64.46%
+5,Risk to Reward,1.25%
+6,Avg Return Per Trade,0.16%
+7,Avg Profit Per Trade,0.82%
+8,Avg Loss Per Trade,-1.02%
+9,Max Profit Per Trade,4.22%
+10,Max Loss Per Trade,-2.68%
+11,Avg Return Per Month,3.46%
+12,Avg Return Per Year,41.53%
+13,Total Return,46.35%
+14,CAGR Return,46.35%
+15,Max Drawdown,-7.33%
+16,Sharpe Ratio,2.11
+17,Calmar Ratio,6.64
