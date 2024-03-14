@@ -6,7 +6,7 @@
 4.	Monitor the position for the rest of the trading days and exit all legs of the trade together if either of the following conditions is met:
 o	The 30% stop loss is hit.
 o	The target of 80% is achieved.
-5.	If neither condition is met, hold the position until the expiry time of 3:20 pm and exit all legs of the trade together.
+5.	If neither condition is met, hold the position until the expiry time of 3:20 pm and exit all legs of the trade together. <br/>
 Link to Data : https://drive.google.com/drive/folders/1c4iiWbfzmPPoMWk08jUeqz0YL_yheM8Y?usp=sharing <br/>
 Backtesting Period : 2017 ; Instrument : BANKNIFTY Futures & Options
 
