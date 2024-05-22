@@ -1,7 +1,8 @@
 import pandas as pd
+from typing import List, Dict
 
 ## remove duplicate values from a list
-def remove_duplicates(lst):
+def remove_duplicates(lst: List[str]) -> List[str]:
     seen = set()
     unique_list = []
     
@@ -14,7 +15,7 @@ def remove_duplicates(lst):
     return unique_list
 
 ## grouping futures data based on contract type and expiry
-def groupby_fut(fut_data):
+def groupby_fut(fut_data: pd.DataFrame) -> Dict[str, pd.DataFrame]:
     fut_data['Datetime'] = pd.to_datetime(fut_data['Date'] + ' ' + fut_data['Time'])
     del fut_data['Date'], fut_data['Time']
     
@@ -32,14 +33,13 @@ def groupby_fut(fut_data):
     return grouped_dfs
 
 ## grouping options data based on expiry, strike price and contract type
-def groupby_options(options_data):
+def groupby_options(options_data: pd.DataFrame):
     options_data['Datetime'] = pd.to_datetime(options_data['Date'] + ' ' + options_data['Time'])
     del options_data['Date'], options_data['Time']
     
     grouped_data = options_data.groupby(['Expiry', 'Strike', 'Type'])
     grouped_dfs = {}
     expiry_date = []
-    
     
     for group, df in grouped_data:
         expiry, strike, type = group
@@ -52,3 +52,4 @@ def groupby_options(options_data):
     ## returns 1. dictionary with key as specified option contract data and
     ## value as the ohlc data of premium 2. list containing expiry dates
     return grouped_dfs, expiry_date
+
