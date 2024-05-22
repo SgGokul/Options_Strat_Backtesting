@@ -2,7 +2,7 @@ from data_processing import groupby_fut
 import pandas as pd
 
 ## extract type I future contracts and store its ohlc datas in a single dataframe
-def bnf_data(fut_data):
+def bnf_data(fut_data: pd.DataFrame) -> pd.DataFrame:
     bnf_dict = {}
     bnf_dict = groupby_fut(fut_data)
 
