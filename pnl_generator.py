@@ -1,6 +1,7 @@
 import math
+import pandas as pd
 
-def calculate_margin_and_capital(df, lot_size, capital, capital_allocation_per_trade):
+def calculate_margin_and_capital(df: pd.DataFrame, lot_size: int, capital: float, capital_allocation_per_trade: float) -> None:
     ## iterating through rows of the tradebook to calculate PnL and Capital
     for index, row in df.iterrows():
         ## calcualte absolute return from the premiums

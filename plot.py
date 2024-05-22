@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 
 ## plot equity and drawdown curve
-def plot_equity_dd_curve(df):
+def plot_equity_dd_curve(df: pd.DataFrame) -> None:
     fig, ax1 = plt.subplots(figsize=(20, 13))
 
     sns.lineplot(data=df, x=df.index, y='Capital', color='blue', linewidth=3, label='Equity Curve', ax=ax1)
