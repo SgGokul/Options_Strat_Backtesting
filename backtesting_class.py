@@ -6,7 +6,7 @@ from bnf_ohlcv_data import bnf_data
 
 class backtesting:
     ## input all class parameters
-    def __init__(self, filepath_fut, filepath_opt, capital, wing_percent, sl, tp):
+    def __init__(self, filepath_fut: str, filepath_opt: str, capital: float, wing_percent: float, sl: float, tp: float) -> None:
         self.filepath_fut = filepath_fut
         self.filepath_opt = filepath_opt
         self.wing_percent = wing_percent
@@ -23,33 +23,33 @@ class backtesting:
                                                  'CE_long_ex_price', 'PE_long_ex_price', 'TP/SL/SqOFF'])
     
     ## get the banknifty future ohlcv data by calling the bnf_ohlcv_data.py file
-    def get_fut_ohlcv_data(self):
+    def get_fut_ohlcv_data(self) -> None:
         raw = pd.read_csv(self.filepath_fut)
         self.bnf_data = bnf_data(raw)
         
     
     ## get the banknifty options ohlcv data of all strikes and diff types of contracts 
     ## in a dict format by calling data_processing.py file
-    def get_opt_ohlcv_data(self):
+    def get_opt_ohlcv_data(self) -> None:
         raw = pd.read_csv(self.filepath_opt)
         self.options_dict, self.expiry_list = groupby_options(raw)
         
     
     ## calculate the strike price of the contract for entry    
-    def stk_price(self, spot_price):
+    def stk_price(self, spot_price: float) -> float:
         stk = (round(spot_price/100))*100
         
         return stk 
     
     ## calculate the strike prices of the contracts for entry of wings
-    def wing_stk(self, stk):
+    def wing_stk(self, stk: float):
         wing_ce_stk = self.stk_price(stk*(1+self.wing_percent))
         wing_pe_stk = self.stk_price(stk*(1-self.wing_percent))
         
         return wing_ce_stk, wing_pe_stk
     
     ## extract key from the dictionary for CE and PE contracts for short ATM Straddle
-    def strike_key(self, nearest_expiry, stk):
+    def strike_key(self, nearest_expiry: str, stk: str):
         search_str = "BANKNIFTY_" + str(nearest_expiry) + "_" + str(stk)
                             
         ce_key = None
@@ -65,7 +65,7 @@ class backtesting:
         return ce_key, pe_key
     
     ## extract key from the dictionary of different contracts for the wing trades that we take for protection
-    def wing_key(self, nearest_expiry, stk, type):
+    def wing_key(self, nearest_expiry: str, stk: str, type: str) -> str:
         search_str = "BANKNIFTY_" + str(nearest_expiry) + "_" + str(stk)
         
         contract_key = None
@@ -78,13 +78,13 @@ class backtesting:
         return contract_key   
     
     ## extract premium during the time of entry/exit
-    def opt_premium(self, key, date, ohlc):
+    def opt_premium(self, key: str, date: pd.Timestamp, ohlc: str) -> float:
         premium = self.options_dict[key][self.options_dict[key]['Datetime'] == date][ohlc].iloc[0]     
     
         return premium
     
     ## extract the nearest premium avail or the premium avail at a specified timestamp
-    def get_nearest_premium_value(self, key, date, ohlc):
+    def get_nearest_premium_value(self, key: str, date: pd.Timestamp, ohlc: str):
         if date in self.options_dict[key]['Datetime'].values:
             return self.opt_premium(key, date, ohlc), date
         else:
@@ -97,7 +97,7 @@ class backtesting:
     
     
     ## update tradebook accordingly with exit prices and exit times 
-    def update_tradebook(self, tradecheck, exit_date, ce_key, pe_key, wing_ce_key, wing_pe_key):
+    def update_tradebook(self, tradecheck: int, exit_date: pd.Timestamp, ce_key: str, pe_key: str, wing_ce_key: str, wing_pe_key: str) -> None:
         wing_ce_premium_value, wing_ce_exit_date = self.get_nearest_premium_value(wing_ce_key, exit_date, 'Close')
         wing_pe_premium_value, wing_pe_exit_date = self.get_nearest_premium_value(wing_pe_key, exit_date, 'Close')
         ce_premium_value, ce_exit_date = self.get_nearest_premium_value(ce_key, exit_date, 'Close')
@@ -112,7 +112,7 @@ class backtesting:
         self.tradebook.loc[tradecheck, 'PE_long_ex_date'] = wing_pe_exit_date    
     
     ## backtest the strategy here generating trading logs alongside    
-    def test_strat(self):
+    def test_strat(self, entry_time: str) -> pd.DataFrame:
         date = pd.to_datetime(self.bnf_data['Datetime'].iloc[0])
         end_date = pd.to_datetime(self.bnf_data['Datetime'].iloc[-1])
         tp_hit = False
@@ -125,7 +125,7 @@ class backtesting:
                 ## try and except to bypass missing values
                 try:
                     ## entry during 10.30 a.m.
-                    if date.strftime("%H:%M") == "10:29":
+                    if date.strftime("%H:%M") == entry_time:
                         ## try and except to execute trades only during trading days
                         try:
                             ## calculate strike prices of straddle to enter at
