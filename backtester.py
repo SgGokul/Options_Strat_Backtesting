@@ -2,6 +2,8 @@ from backtesting_class import backtesting
 from pnl_generator import calculate_margin_and_capital
 from trade_analysis import drawdown, generate_stats_sheet
 from plot import plot_equity_dd_curve
+from datetime import datetime
+import time
 
 ## path to csv files
 filepath_fut = 'Data/fut.csv'
@@ -17,9 +19,13 @@ tp = 0.8
 capital_allocation_per_trade = 0.80
 lot_size = 15
 
+entry_time = "10:08"
+
+start_time = time.time()
+
 ## backtest the strategy and extract the tradebook
 Model = backtesting(filepath_fut, filepath_opt, capital, wing_percent, sl, tp)
-df = Model.test_strat()
+df = Model.test_strat(entry_time)
 
 ## calculate returns, capital growth, PnL
 calculate_margin_and_capital(df, lot_size, capital, capital_allocation_per_trade)
@@ -28,6 +34,10 @@ drawdown(df)
 ## extract the stats for the strategy
 stats = generate_stats_sheet(df, capital)
 print(stats)
-plot_equity_dd_curve(df)
+# plot_equity_dd_curve(df)
 
-print(df)
+# print(df)
+
+end_time = time.time() - start_time
+
+print("Total time taken to run the backtest: ", end_time)
